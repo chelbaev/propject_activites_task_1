@@ -35,7 +35,8 @@ def binary_feature (
     average = df[colum].mean() 
     one_colum = df[colum]
     one_colum.name = f'filtered_{colum}'
-    one_colum = one_colum > average
+    one_colum = (one_colum > average).astype(int)
+
     df = pd.concat([df, one_colum], axis=1)
     if verbose:
         print(df)
