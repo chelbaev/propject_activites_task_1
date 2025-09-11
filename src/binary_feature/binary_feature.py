@@ -15,6 +15,22 @@ def binary_feature (
         names: Sequence[Hashable] | None | lib.NoDefault = None,
         verbose: bool = False
         )->pd.DataFrame:
+    """Make binary feature by average.
+
+    Parameters
+    ----------
+    name: str
+        Path to file or url
+    colum: str
+        Which colum mast be makes binary feature
+    index_col: int | str | Sequence[str | int] | Literal[False] | None, optional
+        index_col like pd.read_csv
+    names: Sequence[Hashable] | None | lib.NoDefault, optional
+        names like pd.read_csv
+    verbose: bool, optional
+        print result
+    
+    """
     df = pd.read_csv(name, index_col=index_col, names=names)
     average = df[colum].mean() 
     one_colum = df[colum]
