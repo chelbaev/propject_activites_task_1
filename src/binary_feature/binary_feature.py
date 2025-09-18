@@ -31,10 +31,24 @@ def binary_feature (
         print result
     
     """
-    df = pd.read_csv(name, index_col=index_col, names=names)
+    try:
+        df = pd.read_csv(name, index_col=index_col, names=names)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File {name} dosen't exist")
+    except Exception as err:
+        raise err
+    if colum not in df.columns:
+        raise IndexError(f"Colum {colum} dosen't exist")
+    if pd.to_numeric(df[colum], errors='coerce').isnull().any():
+        raise AttributeError(f'Colum {colum} must be numeric')
     average = df[colum].mean() 
     one_colum = df[colum]
-    one_colum.name = f'filtered_{colum}'
+    name = f'filtered_{colum}'
+    count = 1
+    while name in df.columns:
+        name = f'filtered_{colum}_{count}'
+        count += 1
+    one_colum.name = name
     one_colum = (one_colum > average).astype(int)
 
     df = pd.concat([df, one_colum], axis=1)

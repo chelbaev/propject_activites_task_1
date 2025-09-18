@@ -16,3 +16,10 @@ df = binary_feature(
     verbose=True
 )
 df.to_csv('out2.csv')
+
+binary_feature(
+    name='out2.csv',
+    colum='sepal_length',
+    index_col=0,
+    verbose=True
+).to_csv('out3.csv')
